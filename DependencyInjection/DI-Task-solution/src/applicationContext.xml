@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="draw2DBean" class="Draw2D"> </bean>
+    <bean id="draw3DBean" class="Draw3D"> </bean>
+
+    <bean id="circleBean" class="Circle">
+        <constructor-arg ref="draw2DBean"> </constructor-arg>
+        <constructor-arg ref="draw3DBean"> </constructor-arg>
+    </bean>
+    <bean id="squareBean" class="Square">
+        <property name="draw2D" ref="draw2DBean"> </property>
+        <property name="draw3D" ref="draw3DBean"> </property>
+    </bean>
+
+</beans>
