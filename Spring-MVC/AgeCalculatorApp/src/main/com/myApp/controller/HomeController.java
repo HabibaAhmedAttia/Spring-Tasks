@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
 public class HomeController
 {
 
-    @RequestMapping("/showForm")
+    @RequestMapping("/")
     public String showHomePage()
     {
         return "formPage";
