@@ -22,11 +22,23 @@
                 <!-- Username Input -->
                 <div class="form-group mb-3">
                     <form:input type="text" placeholder="Username" path="userName" class="form-control" />
+                    <form:errors path="userName" cssClass="error"/>
+                </div>
+
+                <div class="form-group mb-3">
+                    <form:input type="text" placeholder="Email" path="email" class="form-control" />
+                    <form:errors path="email" cssClass="error"/>
+                </div>
+
+                <div class="form-group mb-3">
+                    <form:input type="text" placeholder="age" path="age" class="form-control" />
+                    <form:errors path="age" cssClass="error"/>
                 </div>
 
                 <!-- Password Input -->
                 <div class="form-group mb-3">
                     <form:input type="password" placeholder="Password" path="password" class="form-control" />
+
                 </div>
 
                 <!-- Country Dropdown -->
