@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 @Controller
 public class Authentication {
@@ -19,7 +19,6 @@ public class Authentication {
         model.addAttribute("user", new User());
         return "register";
     }
-
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") @Valid User user,
                                BindingResult result, Model model) {
@@ -30,7 +29,6 @@ public class Authentication {
             model.addAttribute("error", "Email already exists.");
             return "register";
         }
-
         boolean saved = userDAO.saveUser(user);
         if (saved) {
             model.addAttribute("msg", "Registration successful. Please login.");
@@ -46,15 +44,20 @@ public class Authentication {
         model.addAttribute("user", new User());
         return "login";
     }
-
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute("user") User user, Model model) {
-        boolean isValid = userDAO.validateUser(user.getEmail(), user.getPassword());
-        if (isValid) {
-            model.addAttribute("name", user.getEmail());
-            return "index";
-        } else {
-            model.addAttribute("error", "Invalid email or password.");
+    public String loginUser(@ModelAttribute("user") User user,BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors())
+        {
+            return "login";
+        }
+        User fullUser = userDAO.getUserByEmailAndPassword(user.getEmail(), user.getPassword());
+        if (fullUser != null) {
+            model.addAttribute("user", fullUser);
+            System.out.println("Logged in as: " + fullUser.getName());
+            return "welcome";
+        }
+        else {
+            model.addAttribute("error", "Invalid email or password");
             return "login";
         }
     }

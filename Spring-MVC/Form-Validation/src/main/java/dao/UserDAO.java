@@ -67,4 +67,29 @@ public class UserDAO {
             return false;
         }
     }
+    public User getUserByEmailAndPassword(String email, String password) {
+        User user = null;
+        String sql = "SELECT * FROM user WHERE email=? AND password=?";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                 PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, email);
+                ps.setString(2, password);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setName(rs.getString("name"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPassword(rs.getString("password"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+
 }

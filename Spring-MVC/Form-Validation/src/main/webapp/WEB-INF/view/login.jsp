@@ -1,4 +1,5 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -8,6 +9,10 @@
 <body>
 <div class="container mt-5">
     <h2 class="text-center">Login</h2>
+    <c:if test="${not empty error}">
+        <div style="color:red;">${error}</div>
+    </c:if>
+
     <form:form action="login" modelAttribute="user" method="post" class="mt-4">
         <div class="form-group">
             <form:label path="email">Email</form:label>
