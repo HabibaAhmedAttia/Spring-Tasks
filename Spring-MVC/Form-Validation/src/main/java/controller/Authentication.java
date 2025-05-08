@@ -14,23 +14,24 @@ import javax.validation.Valid;
 public class Authentication {
     private UserDAO userDAO = new UserDAO();
 
-    // Show register form
     @RequestMapping("/register")
     public String showRegisterForm(Model model) {
         model.addAttribute("user", new User());
         return "register";
     }
 
-    // Handle register submission
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") @Valid User user,
                                BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "register";
         }
+        if (userDAO.emailExists(user.getEmail())) {
+            model.addAttribute("error", "Email already exists.");
+            return "register";
+        }
 
         boolean saved = userDAO.saveUser(user);
-//        boolean isValid = userDAO.validateUser(user.getEmail(), user.getPassword());
         if (saved) {
             model.addAttribute("msg", "Registration successful. Please login.");
             return "redirect:/login";
@@ -40,20 +41,18 @@ public class Authentication {
         }
     }
 
-    // Show login form
     @RequestMapping("/login")
     public String showLoginForm(Model model) {
         model.addAttribute("user", new User());
         return "login";
     }
 
-    // Handle login submission
     @PostMapping("/login")
     public String loginUser(@ModelAttribute("user") User user, Model model) {
         boolean isValid = userDAO.validateUser(user.getEmail(), user.getPassword());
         if (isValid) {
             model.addAttribute("name", user.getEmail());
-            return "index"; // You should create a welcome.jsp
+            return "index";
         } else {
             model.addAttribute("error", "Invalid email or password.");
             return "login";
