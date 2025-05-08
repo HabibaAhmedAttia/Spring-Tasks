@@ -5,26 +5,20 @@ import model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 @Controller
 public class Authentication {
     private UserDAO userDAO = new UserDAO();
 
-
     // Show register form
-    @GetMapping("/register")
+    @RequestMapping("/register")
     public String showRegisterForm(Model model) {
         model.addAttribute("user", new User());
         return "register";
-    }
-
-    @GetMapping("/")
-    public String homeRedirect() {
-        return "redirect:/register";
     }
 
     // Handle register submission
@@ -36,6 +30,7 @@ public class Authentication {
         }
 
         boolean saved = userDAO.saveUser(user);
+//        boolean isValid = userDAO.validateUser(user.getEmail(), user.getPassword());
         if (saved) {
             model.addAttribute("msg", "Registration successful. Please login.");
             return "redirect:/login";
@@ -46,7 +41,7 @@ public class Authentication {
     }
 
     // Show login form
-    @GetMapping("/login")
+    @RequestMapping("/login")
     public String showLoginForm(Model model) {
         model.addAttribute("user", new User());
         return "login";
@@ -58,7 +53,7 @@ public class Authentication {
         boolean isValid = userDAO.validateUser(user.getEmail(), user.getPassword());
         if (isValid) {
             model.addAttribute("name", user.getEmail());
-            return "welcome"; // You should create a welcome.jsp
+            return "index"; // You should create a welcome.jsp
         } else {
             model.addAttribute("error", "Invalid email or password.");
             return "login";

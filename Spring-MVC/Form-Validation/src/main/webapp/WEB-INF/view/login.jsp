@@ -25,7 +25,7 @@
             <button type="submit" class="btn btn-primary">Login</button>
         </div>
         <div>
-            <a href="register.jsp">Don't have an account? Register</a>
+            <a href="register">Don't have an account? Register</a>
         </div>
     </form:form>
 </div>

@@ -37,7 +37,7 @@
             <button type="submit" class="btn btn-success">Register</button>
         </div>
         <div>
-            <a href="login.jsp">Already have an account? Login</a>
+            <a href="login">Already have an account? Login</a>
         </div>
     </form:form>
 </div>
