@@ -1,1 +1,2 @@
 main.com.myApp.model.Student=javax.persistence.Entity,javax.persistence.Table
+main.com.myApp.model.User=javax.persistence.Entity,javax.persistence.Table
